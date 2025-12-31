@@ -230,7 +230,7 @@ Section SIM.
         (SIM: forall ev st_tgt1, (step st_tgt0 ev st_tgt1) ->
                             (ekind ev = observableE) /\
                          exists st_src1, (step st_src0 ev st_src1) /\
-                                      (_sim sim true true st_src1 st_tgt1))
+                                      (sim true true st_src1 st_tgt1))
       :
       sim_indC sim p_src p_tgt st_src0 st_tgt0
     | sim_indC_silentL
@@ -270,7 +270,7 @@ Section SIM.
   Proof.
     ii. inv IN.
     all: try (econs; eauto; fail).
-    - econs 2; auto. i. specialize (SIM _ _ H). des. esplits; eauto. eapply sim_mon; eauto.
+    - econs 2; auto. i. specialize (SIM _ _ H). des. esplits; eauto.
     - des. econs 3; eauto. esplits; eauto.
     - econs 4; auto. i. specialize (SIM _ _ H). des. splits; eauto.
   Qed.
