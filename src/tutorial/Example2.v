@@ -217,13 +217,48 @@ Section EX.
 
   Goal refines (Imp_Program_Ext src1) (Imp_Program_Ext tgt1).
   Proof.
-  Admitted.
+    apply adequacy. unfold simulation, Imp_Program_Ext, Imp_STS_Ext, src1, tgt1, Imp_init. ss.
+    step_tgt_silent.
+    pcofix CIH.
+    step_tgt_silent.
+    {
+      inv H6.
+    }
+    2: 
+    {
+      exfalso.  eapply UNDEF. eapply E_WhileTrue; repeat econs. eauto.
+    }
+    inv H6. clear H7. 
+    step_tgt_silent. 
+  Qed.
 
 
   (* CEX2. The other way around. Prove this by coinduction. *)
   Goal refines (Imp_Program_Ext tgt1) (Imp_Program_Ext src1).
   Proof.
-  Admitted.
+    apply adequacy. unfold simulation, Imp_Program_Ext, Imp_STS_Ext, src1, tgt1, Imp_init. ss.
+    step_src_silent.
+    pcofix CIH.
+    pfold. econs 3;ss.
+    do 2 eexists. splits. 
+    {
+      econs. eapply E_WhileTrue;try econs.
+      eauto.
+    }
+    {
+      ss.
+    }
+    left.
+    pfold. econs 3;ss. 
+    do 2 eexists. splits.
+    {
+      repeat econs.
+    }
+    {
+      ss.
+    }
+    right. eauto.
+  Qed.
 
   (** These counterexamples show that we need a mechanism to prevent *infinite stuttering*.
       Stuttering in simulation means that only one side (src or tgt) makes progress, while the other side stutters at the same state.
