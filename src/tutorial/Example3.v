@@ -133,8 +133,8 @@ Section EX.
     ss. i. ginit. step_tgt_silent. clear pt. revert ps. gcofix CIH. i.
     step_tgt_silent. inv H6. inv H6. clear H7. 
     {
-      step_tgt_silent. gfinal. right. pfold. econs 6. (* and stuck... *)
-      admit.
+      step_tgt_silent. gfinal. right. pfold. econs 6.   (* and stuck... *)
+      all: admit.
     }
   Abort.
 
